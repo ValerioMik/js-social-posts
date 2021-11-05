@@ -126,13 +126,13 @@ for (let i = 0; i < inFormazioniPost.length; i++ ){
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#" data-postid="${i}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${numerMipiace}</b> persone
+                    Piace a <b id="like-counter-${i}" class="js-likes-counter">${numerMipiace}</b> persone
                 </div>
             </div> 
         </div>    
@@ -141,16 +141,91 @@ for (let i = 0; i < inFormazioniPost.length; i++ ){
 };
 
 
-const{numerMipiace} = inFormazioniPost[i];
+stamp ()
 
-const botTon= querySelectorAll("like-button");
+const botTon= document.querySelectorAll("js-like-button");
+const numPiace= document.querySelectorAll("like-counter-1");
+
 
 for(let i = 0 ; i < botTon.length;i++){
-    botTon.addEventListener ("click",
+    botTon[i].addEventListener ("click",
     function(){
-        numerMipiace++;
-    })
+        const index = this.getAttribute("data-postid");
+        inFormazioniPost[i].numerMipiace = parseInt(inFormazioniPost[i].numerMipiace)+1;
+        stamp ()
+        
+    });
    
-};
+}
 
 
+
+
+function stamp() {
+    for (let i = 0; i < inFormazioniPost.length; i++ ){
+        const {imgAutore,nomeAutore,dataPost,testoPost,imgPost,numerMipiace} = inFormazioniPost[i];
+        console.log(inFormazioniPost);
+        if(imgPost!== undefined){
+        postCont.innerHTML += `
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src= ${imgAutore} alt="Phil Mangione">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${nomeAutore}</div>
+                        <div class="post-meta__time">${dataPost}</div>
+                    </div>                    
+                </div>
+            </div>
+                <div class="post__text">${testoPost}</div>
+                <div class="post__image">
+                    <img src= ${imgPost} alt="">
+                </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-1" class="js-likes-counter">${numerMipiace}</b> persone
+                    </div>
+                </div> 
+            </div>    
+            `}else {
+            postCont.innerHTML +=  `
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src= ${imgAutore} alt="Phil Mangione">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${nomeAutore}</div>
+                        <div class="post-meta__time">${dataPost}</div>
+                    </div>                    
+                </div>
+            </div>
+                <div class="post__text">${testoPost}</div>
+                <div class="post__image">
+                </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="${i}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-${i}" class="js-likes-counter">${numerMipiace}</b> persone
+                    </div>
+                </div> 
+            </div>    
+            `}
+            
+    };
+    
+}
